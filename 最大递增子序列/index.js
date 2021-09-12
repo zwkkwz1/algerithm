@@ -51,3 +51,4 @@ var lengthOfLIS = function (arr) {
   return result
 };
 lengthOfLIS([10,9,2,5,3,7,101,18])
+// TODO：可优化。应该不用完全排序 
