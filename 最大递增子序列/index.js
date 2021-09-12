@@ -14,8 +14,8 @@ var lengthOfLIS = function (arr) {
     j = result[result.length - 1]
     // 与最后一项进行比较
     if (arr[j] < arrI) {
-      p[i] = j // 最后一项与 p 对应的索引进行对应
-      result.push(i)
+      p[i] = j // 用p对象记录i之前正确的下标
+      result.push(i) // 将下标放入result数组
       continue
     }
     // arrI 比 arr[j] 小，使用二分查找找到后替换它
@@ -50,4 +50,4 @@ var lengthOfLIS = function (arr) {
   }
   return result
 };
-lengthOfLIS([])
+lengthOfLIS([10,9,2,5,3,7,101,18])
