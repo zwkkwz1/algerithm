@@ -48,10 +48,12 @@ var findMedianSortedArrays = function(nums1, nums2) {
 		}
 		if (longLen & 1) { // mid1左右数量相同
 			const x2 = Math.max(shortLen - 2 * left2 + 3 >> 1, 1) // 对于右侧的来说。
-			short = [...short, ...long.slice(mid1 + x2)] // 剪切右侧的放入short右侧
+      short = short.concat(long.slice(mid1 + x2))
+			// short = [...short, ...long.slice(mid1 + x2)] // 剪切右侧的放入short右侧
 			const x = Math.max(2 * left2 - shortLen + 3 >> 1, 1) // 对于左侧的来说。
 			if (mid1 - x + 1 > 0) {
-				short = [...long.slice(0, mid1 - x + 1), ...short] // 剪切左侧的放入short左侧
+        short = long.slice(0, mid1 - x + 1).concat(short)
+				// short = [...long.slice(0, mid1 - x + 1), ...short] // 剪切左侧的放入short左侧
 				long = long.slice(mid1 - x + 1, mid1 + x2) // 更新long
 				long.splice(x - 1, 1) // 剪切mid1
 			} else {
@@ -60,10 +62,12 @@ var findMedianSortedArrays = function(nums1, nums2) {
 			}
 		} else { // mid1左边比右边少一个
 			const x2 = Math.max(shortLen - 2 * left2 + 4 >> 1, 1) // 对于右侧的来说。
-			short = [...short, ...long.slice(mid1 + x2)] // 剪切右侧的放入short右侧
+      short = short.concat(long.slice(mid1 + x2))
+			// short = [...short, ...long.slice(mid1 + x2)] // 剪切右侧的放入short右侧
 			const x = Math.max(2 * left2 - shortLen + 2 >> 1, 1) // 对于左侧的来说。
 			if (mid1 - x + 1 > 0) {
-				short = [...long.slice(0, mid1 - x + 1), ...short] // 剪切左侧的放入short左侧
+        short = long.slice(0, mid1 - x + 1).concat(short)
+				// short = [...long.slice(0, mid1 - x + 1), ...short] // 剪切左侧的放入short左侧
 				long = long.slice(mid1 - x + 1, mid1 + x2) // 更新long
 				long.splice(x - 1, 1) // 剪切mid1
 			} else {
@@ -152,7 +156,8 @@ function test() {
 		// const t3 = getT()
 		// const res2 = findMedianSortedArrays2(a3, a4)
 		const t4 = getT()
-		const orderArr = [...arr1, ...arr2].sort((a, b) => a - b)
+    const orderArr = arr1.concat(arr2).sort((a, b) => a - b)
+		// const orderArr = [...arr1, ...arr2].sort((a, b) => a - b)
 		const res3 = (orderArr[(orderArr.length - 1) >> 1] + orderArr[orderArr.length >> 1]) / 2
 		const t5 = getT()
 		if (res !== res3) {
