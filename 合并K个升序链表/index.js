@@ -1,12 +1,14 @@
+
 /**
  * @param {ListNode[]} lists
  * @return {ListNode}
  */
 var mergeKLists = function(lists) {
-  function orderOneNum(arr, nums) {
-    let r = arr.length - 1
-    if (nums > arr[r]) {
-      arr.push(nums)
+  function orderOneNum(arr, iarro, nums) {
+    let r = iarro[1]
+    if (nums > arr[iarro[1]]) {
+      arr.splice(iarro[1] + 1, 0, nums)
+      // arr.push(nums)
       return r + 1
     }
     let l = 0
@@ -24,18 +26,25 @@ var mergeKLists = function(lists) {
   while(lists.length > 1) {
     // const mid = (0 + arr.length - 1) >> 1
     // lists[1].splice(mid, 1)
-    function pushNum(arr1, arr2) {
-      const mid = (arr2.length - 1) >> 1
-      const p = orderOneNum(arr1, arr2.splice(mid, 1)[0])
-      if (arr2.length === 0) {
+    function pushNum(arro, iarro, arrt, iarrt) {
+      const mid = (iarrt[0] + iarrt[1]) >> 1
+      const p = orderOneNum(arro, iarro, arrt.splice(mid, 1)[0])
+      if (arrt.length === 0) {
         return
       } else if (mid > 0) {
-        pushNum(arr1.slice(0, p), arr2.slice(0, mid - 1)) // 计算左侧
-      } else {
-        pushNum(arr1.slice(0, p), arr2.slice(mid - 1)) // 计算右侧
+        // const a1 = arro.slice(0, p)
+        // const ml = mid >> 1
+        // const a2 = arrt.slice(0, mid)
+        pushNum(arro, [0, p], arrt, [0, mid]) // 计算左侧
       }
+      if (mid >= arrt.length || (p + 1) >= arro.length) {
+        return
+      }
+      // const a1 = arro.slice(p + 1)
+      // const a2 = arrt.slice(mid)
+      pushNum(arro , [p + 1, arro.length - 1], arrt, [mid, arrt.length - 1]) // 计算右侧
     }
-    pushNum(lists[0], lists[1])
+    pushNum(lists[0], [0, lists[0].length - 1], lists[1], [0, lists[1].length - 1])
     lists.splice(1, 1)
   }
   return lists[0]
